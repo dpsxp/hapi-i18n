@@ -32,11 +32,9 @@ exports.register = function ( server, options, next ) {
     } else if (pluginOptions.cookie && request.state[pluginOptions.cookie]) {
       var cookie = request.state[pluginOptions.cookie];
 
-      if ( _.includes( pluginOptions.locales, cookie ) == false ) {
-        return reply( Boom.notFound( "No localization available for " + request.params.languageCode ) );
+      if ( _.includes( pluginOptions.locales, cookie ) ) {
+        request.i18n.setLocale(cookie);
       }
-
-      request.i18n.setLocale(cookie);
     }
 
     return reply.continue();
